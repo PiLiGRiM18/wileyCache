@@ -11,9 +11,9 @@ public class DataObject implements Serializable {
     private int key;
     private String value;
 
-    public DataObject(int id, String name) {
-        this.key = id;
-        this.value = name;
+    public DataObject(int key, String value) {
+        this.key = key;
+        this.value = value;
     }
 
     public int getKey() {
