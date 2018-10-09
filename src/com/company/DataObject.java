@@ -8,28 +8,28 @@ import java.util.Objects;
  */
 public class DataObject implements Serializable {
 
-    private int id;
-    private String data;
+    private int key;
+    private String value;
 
     public DataObject(int id, String name) {
-        this.id = id;
-        this.data = name;
+        this.key = id;
+        this.value = name;
     }
 
-    public int getId() {
-        return id;
+    public int getKey() {
+        return key;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setKey(int key) {
+        this.key = key;
     }
 
-    public String getData() {
-        return data;
+    public String getValue() {
+        return value;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -37,20 +37,20 @@ public class DataObject implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DataObject that = (DataObject) o;
-        return id == that.id &&
-                Objects.equals(data, that.data);
+        return key == that.key &&
+                Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, data);
+        return Objects.hash(key, value);
     }
 
     @Override
     public String toString() {
         return "DataObject{" +
-                "id=" + id +
-                ", data='" + data + '\'' +
+                "key=" + key +
+                ", value='" + value + '\'' +
                 '}';
     }
 }
