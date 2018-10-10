@@ -1,13 +1,11 @@
-package com.company.caching;
-
-import com.company.exceptions.NotFoundException;
+package com.company.manager;
 
 import java.util.HashMap;
 
 /**
  * Created by Alexander Pervachuk <apervachuk@wiley.com> on 09.10.2018 11:28
  */
-public class CacheMemory<K, V> implements Cache<K, V> {
+public class MemoryManager<K, V> implements CacheManager<K, V> {
 
     private HashMap<K, V> memotyCache = new HashMap<>();
 
@@ -17,22 +15,22 @@ public class CacheMemory<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public V get(K key) throws NotFoundException {
+    public V get(K key) throws Exception {
         V value;
         try {
             value = memotyCache.get(key);
         } catch (Exception e) {
-            throw new NotFoundException("Entity is not found");
+            throw new Exception("Entity is not found");
         }
         return value;
     }
 
     @Override
-    public V remove(K key) throws NotFoundException {
+    public V remove(K key) throws Exception {
         try {
             memotyCache.remove(key);
         } catch (Exception e) {
-            throw new NotFoundException("Entity is not found");
+            throw new Exception("Entity is not found");
         }
         return null;
     }

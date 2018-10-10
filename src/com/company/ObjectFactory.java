@@ -1,11 +1,12 @@
-package com.company.utils;
-
-import com.company.DataObject;
+package com.company;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Factory gives random DataObject map
+ */
 public class ObjectFactory {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
