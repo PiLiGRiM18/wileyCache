@@ -19,6 +19,7 @@ public class DataObjectSource {
             int key = generateRandomKey(objectsNumber);
             DataObject dataObject = generateRandomDataObject(key);
             dataObjectMap.put(key, dataObject);
+            keys.add(key);
         }
     }
 

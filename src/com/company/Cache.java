@@ -5,10 +5,7 @@ import com.company.manager.CacheManager;
 import com.company.strategy.Strategy;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @param <V>
@@ -17,6 +14,7 @@ import java.util.List;
 public class Cache<V, K> {
 
     private List<Measure<K>> measuresList = new ArrayList<>();
+    private Map<K, Measure<K>> measuresMap = new HashMap<>();
     private Strategy strategy;
     private Serializer serializer;
     private int maxCachedObjects;
@@ -84,6 +82,9 @@ public class Cache<V, K> {
         }
     }
 
+    /**
+     * Clear cache
+     */
     public void clear() {
         cacheManager.clear();
         measuresList.clear();
@@ -106,6 +107,8 @@ public class Cache<V, K> {
                 }
             });
             cacheManager.remove(measuresList.get(0).key);
+            measuresMap.remove(measuresList.get(0).key);
+            measuresList.remove(0);
         }
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         serializer.serializeObject(object, outputStream);
@@ -116,9 +119,10 @@ public class Cache<V, K> {
      * Performing current strategy to the object using current strategy
      */
     private void performStrategy(K key) {
-        Measure measure = measuresList.get((Integer) key);
+        Measure measure = measuresMap.get(key);
         if (measure == null) {
             measure = new Measure<>(key);
+            measuresMap.put(key, measure);
             measuresList.add(measure);
         }
         measure.meter = strategy.changeMeter(measure.meter);
