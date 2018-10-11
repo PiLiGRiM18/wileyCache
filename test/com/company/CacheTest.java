@@ -1,8 +1,10 @@
 package com.company;
 
+import com.company.manager.CacheManager;
+import com.company.manager.FilesystemManager;
 import com.company.manager.MemoryManager;
 import com.company.strategy.LRUStrategy;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -17,8 +19,11 @@ public class CacheTest {
     @BeforeMethod
     public void precondition() {
         dataObjectSource = new DataObjectSource(100);
+        CacheManager memoryCacheManager = new MemoryManager();
+        CacheManager fileSystemCacheManager = new FilesystemManager();
+
         cache = new Cache(
-                new MemoryManager(),
+                fileSystemCacheManager,
                 new LRUStrategy(),
                 dataObjectSource,
                 new Serializer(),
@@ -27,30 +32,34 @@ public class CacheTest {
 
     @Test
     public void testGetObject() {
-
-
         for (int i = 0; i < 100; i++) {
             int key = dataObjectSource.getRandomKey();
             System.out.print("Request for object: " + key + ", ");
             DataObject dataObject = (DataObject) cache.getObject(key);
-            Assertions.assertEquals(key, dataObject.getKey());
+            Assert.assertEquals(key, dataObject.getKey());
             System.out.println("Iteration:" + i + " | " + dataObject + "\n");
         }
     }
 
     @Test
     public void testPutObject() {
+        int key = dataObjectSource.getRandomKey();
+        for (int i = 0; i < 100; i++) {
+            cache.putObject(key, dataObjectSource.getObject(key));
+        }
+        System.out.println(cache);
     }
 
     @Test
     public void testClear() {
-        DataObjectSource dataObjectSource = new DataObjectSource(100);
-
-        Cache cache = new Cache(
-                new MemoryManager(),
-                new LRUStrategy(),
-                dataObjectSource,
-                new Serializer(),
-                10);
+        for (int i = 0; i < 100; i++) {
+            int key = dataObjectSource.getRandomKey();
+            cache.getObject(key);
+        }
+        System.out.println("\nBefore clearing: \n");
+        System.out.println(cache);
+        cache.clear();
+        System.out.println("\nAfter clearing: \n");
+        System.out.println(cache);
     }
 }
