@@ -76,13 +76,14 @@ public class Cache<V, K> {
     }
 
     /**
-     * Remove object to cache by key
+     * Remove object from cache by key
      */
     private void removeObject(K key) {
         cacheManager.remove(key);
-        Measure measure = measuresList.get((Integer) key);
+        Measure measure = measuresMap.get(key);
         if (measure != null) {
             measuresList.remove(measure);
+            measuresMap.remove(key);
         }
     }
 
@@ -91,6 +92,7 @@ public class Cache<V, K> {
      */
     public void clear() {
         cacheManager.clear();
+        measuresMap.clear();
         measuresList.clear();
     }
 
@@ -143,5 +145,18 @@ public class Cache<V, K> {
         public Measure(T key) {
             this.key = key;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Cache{" +
+                "\nmeasuresList=" + measuresList +
+                ",\n measuresMap=" + measuresMap +
+                ",\n strategy=" + strategy +
+                ",\n serializer=" + serializer +
+                ",\n maxCachedObjects=" + maxCachedObjects +
+                ",\n cacheManager=" + cacheManager +
+//                ",\n dataObjectSource=" + dataObjectSource +
+                '}';
     }
 }

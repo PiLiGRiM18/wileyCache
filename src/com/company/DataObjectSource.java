@@ -3,7 +3,7 @@ package com.company;
 import java.util.*;
 
 /**
- * Factory gives random DataObject
+ * Source with random DataObject
  */
 public class DataObjectSource {
 
