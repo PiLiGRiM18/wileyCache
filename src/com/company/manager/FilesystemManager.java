@@ -32,6 +32,11 @@ public class FilesystemManager<K, V> implements CacheManager<K, V> {
     }
 
     @Override
+    public boolean contains(K key) {
+        return false;
+    }
+
+    @Override
     public void clear() {
 
     }

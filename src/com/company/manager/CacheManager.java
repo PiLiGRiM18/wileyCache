@@ -6,9 +6,11 @@ package com.company.manager;
 public interface CacheManager<K, V> {
     void put(K key, V value);
 
-    V get(K key) throws Exception;
+    V get(K key);
 
-    V remove(K key) throws Exception;
+    V remove(K key);
+
+    boolean contains(K key);
 
     void clear();
 

@@ -15,24 +15,30 @@ public class MemoryManager<K, V> implements CacheManager<K, V> {
     }
 
     @Override
-    public V get(K key) throws Exception {
+    public V get(K key) {
         V value;
         try {
             value = memotyCache.get(key);
         } catch (Exception e) {
-            throw new Exception("Entity is not found");
+            System.out.println("Entity is not found");
+            value = null;
         }
         return value;
     }
 
     @Override
-    public V remove(K key) throws Exception {
+    public V remove(K key) {
         try {
             memotyCache.remove(key);
         } catch (Exception e) {
-            throw new Exception("Entity is not found");
+            System.out.println("Entity is not found");
         }
         return null;
+    }
+
+    @Override
+    public boolean contains(K key) {
+        return memotyCache.containsKey(key);
     }
 
     @Override
