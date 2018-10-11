@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.manager.MemoryManager;
 import com.company.strategy.LRUStrategy;
+import org.junit.jupiter.api.Assertions;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -9,20 +11,30 @@ import org.testng.annotations.Test;
  */
 public class CacheTest {
 
-    @Test
-    public void testGetObject() {
+    private DataObjectSource dataObjectSource;
+    private Cache cache;
 
-        DataObjectSource dataObjectSource = new DataObjectSource(100);
-
-        Cache cache = new Cache(
+    @BeforeMethod
+    public void precondition() {
+        dataObjectSource = new DataObjectSource(100);
+        cache = new Cache(
                 new MemoryManager(),
                 new LRUStrategy(),
                 dataObjectSource,
                 new Serializer(),
                 10);
+    }
 
-        for (int i = 0; i < 1000; i++) {
-            System.out.println(i + " : " + cache.getObject(dataObjectSource.getRandomKey()));
+    @Test
+    public void testGetObject() {
+
+
+        for (int i = 0; i < 100; i++) {
+            int key = dataObjectSource.getRandomKey();
+            System.out.print("Request for object: " + key + ", ");
+            DataObject dataObject = (DataObject) cache.getObject(key);
+            Assertions.assertEquals(key, dataObject.getKey());
+            System.out.println("Iteration:" + i + " | " + dataObject + "\n");
         }
     }
 
@@ -32,5 +44,13 @@ public class CacheTest {
 
     @Test
     public void testClear() {
+        DataObjectSource dataObjectSource = new DataObjectSource(100);
+
+        Cache cache = new Cache(
+                new MemoryManager(),
+                new LRUStrategy(),
+                dataObjectSource,
+                new Serializer(),
+                10);
     }
 }

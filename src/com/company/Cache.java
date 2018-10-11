@@ -4,6 +4,7 @@ package com.company;
 import com.company.manager.CacheManager;
 import com.company.strategy.Strategy;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.*;
 
@@ -51,12 +52,15 @@ public class Cache<V, K> {
         V object;
 
         if (cacheManager.contains(key)) {
-            object = (V) cacheManager.get(key);
+            object = (V) serializer.deSerializeObject(new ByteArrayInputStream((byte[]) cacheManager.get(key)));
+            System.out.println("object from cache: ");
         } else {
             object = (V) dataObjectSource.getObject((Integer) key);
+            System.out.println("object from source: ");
         }
         saveInCache(key, object);
         performStrategy(key);
+
         return object;
     }
 
