@@ -27,7 +27,7 @@ public class DataObjectSource {
         return keys.get(index);
     }
 
-    public DataObject getObject(int key) {
+    public DataObject getObject(Integer key) {
         return dataObjectMap.get(key);
     }
 

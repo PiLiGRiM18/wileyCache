@@ -2,7 +2,7 @@ package com.company.strategy;
 
 public class LRUStrategy implements Strategy {
     @Override
-    public long checkObject(long now) {
+    public long changeMeter(long nowMeter) {
         return System.currentTimeMillis();
     }
 }

@@ -27,8 +27,7 @@ public class FilesystemManager<K, V> implements CacheManager<K, V> {
     }
 
     @Override
-    public V remove(K key) {
-        return null;
+    public void remove(K key) {
     }
 
     @Override

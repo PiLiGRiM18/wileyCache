@@ -27,13 +27,12 @@ public class MemoryManager<K, V> implements CacheManager<K, V> {
     }
 
     @Override
-    public V remove(K key) {
+    public void remove(K key) {
         try {
             memotyCache.remove(key);
         } catch (Exception e) {
             System.out.println("Entity is not found");
         }
-        return null;
     }
 
     @Override

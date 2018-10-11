@@ -8,7 +8,7 @@ public interface CacheManager<K, V> {
 
     V get(K key);
 
-    V remove(K key);
+    void remove(K key);
 
     boolean contains(K key);
 
