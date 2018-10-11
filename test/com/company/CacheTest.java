@@ -16,7 +16,7 @@ public class CacheTest {
 
     @BeforeMethod
     public void precondition() {
-        dataObjectSource = new DataObjectSource(100);
+        dataObjectSource = new DataObjectSource(10);
         cache = new Cache(
                 new MemoryManager(),
                 new LRUStrategy(),
