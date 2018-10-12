@@ -39,7 +39,10 @@ public class CacheTest {
 
     @Test
     public void testGetObject() {
-        for (int i = 0; i < 100; i++) {
+
+        final int ITERATIONS = 100;
+
+        for (int i = 0; i < ITERATIONS; i++) {
             int key = dataObjectSource.getRandomKey();
             System.out.print("Request for object: " + key + ", ");
             DataObject dataObject = (DataObject) cache.getObject(key);
