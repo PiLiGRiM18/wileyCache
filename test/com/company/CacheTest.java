@@ -1,8 +1,10 @@
 package com.company;
 
+import com.company.manager.CacheManager;
 import com.company.manager.FilesystemManager;
 import com.company.manager.MemoryManager;
 import com.company.strategy.LRUStrategy;
+import com.company.strategy.Strategy;
 import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -12,24 +14,31 @@ import org.testng.annotations.Test;
  */
 public class CacheTest {
 
+    private static final int NUMBER_SOURCE_OBJECTS = 10;
+    private static final int CACHE_SIZE = 10;
+
     private DataObjectSource dataObjectSource;
+    private CacheManager cacheManager;
+    private Strategy strategy;
+    private Serializer serializer;
     private Cache cache;
 
     @BeforeMethod
     public void precondition() {
-        dataObjectSource = new DataObjectSource(10);
-        cache = new Cache(
-                new FilesystemManager(),
-                new LRUStrategy(),
-                dataObjectSource,
-                new Serializer(),
-                10);
+        dataObjectSource = new DataObjectSource(NUMBER_SOURCE_OBJECTS);
+        serializer = new Serializer();
+
+        cacheManager = new FilesystemManager();
+//        cacheManager = new MemoryManager();
+
+        strategy = new LRUStrategy();
+//        strategy = new LFUStrategy();
+
+        cache = new Cache(cacheManager, strategy, dataObjectSource, serializer, CACHE_SIZE);
     }
 
     @Test
     public void testGetObject() {
-
-
         for (int i = 0; i < 100; i++) {
             int key = dataObjectSource.getRandomKey();
             System.out.print("Request for object: " + key + ", ");
