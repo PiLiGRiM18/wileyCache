@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.manager.FilesystemManager;
 import com.company.manager.MemoryManager;
 import com.company.strategy.LRUStrategy;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +19,7 @@ public class CacheTest {
     public void precondition() {
         dataObjectSource = new DataObjectSource(10);
         cache = new Cache(
-                new MemoryManager(),
+                new FilesystemManager(),
                 new LRUStrategy(),
                 dataObjectSource,
                 new Serializer(),

@@ -1,5 +1,7 @@
 package com.company.manager;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -24,34 +26,52 @@ public class FilesystemManager<K, V> implements CacheManager<K, V> {
     @Override
     public V get(K key) {
         V dataObject = null;
-
-        if (keys.containsKey(key)) {
-
+        if (contains(key)) {
+            try {
+                dataObject = (V) Files.readAllBytes(getFileBytes(key));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return dataObject;
     }
 
     @Override
     public void put(K key, V value) {
-
+        try {
+            Files.write(getFileBytes(key), (byte[]) value);
+            keys.put(key, value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remove(K key) {
+        try {
+            Files.delete(getFileBytes(key));
+            keys.remove(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean contains(K key) {
-        return false;
+        return keys.containsKey(key);
     }
 
     @Override
     public void clear() {
-
+        keys.clear();
     }
 
     @Override
     public int size() {
-        return 0;
+        return keys.size();
+    }
+
+    private Path getFileBytes(K key) {
+        return localDirectory.resolve(key.toString());
     }
 }
