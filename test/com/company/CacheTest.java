@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 public class CacheTest {
 
     private static final int NUMBER_SOURCE_OBJECTS = 10;
-    private static final int CACHE_SIZE = 10;
+    private static final int MAX_CACHE_SIZE = 10;
 
     private DataObjectSource dataObjectSource;
     private CacheManager cacheManager;
@@ -34,7 +34,7 @@ public class CacheTest {
         strategy = new LRUStrategy();
 //        strategy = new LFUStrategy();
 
-        cache = new Cache(cacheManager, strategy, dataObjectSource, serializer, CACHE_SIZE);
+        cache = new Cache(cacheManager, strategy, dataObjectSource, serializer, MAX_CACHE_SIZE);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CacheTest {
 
     @Test
     public void testClear() {
-        DataObjectSource dataObjectSource = new DataObjectSource(100);
+        DataObjectSource dataObjectSource = new DataObjectSource(NUMBER_SOURCE_OBJECTS);
 
         Cache cache = new Cache(
                 new MemoryManager(),
