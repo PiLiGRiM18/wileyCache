@@ -16,14 +16,14 @@ public class MemoryManager<K, V> implements CacheManager<K, V> {
 
     @Override
     public V get(K key) {
-        V value;
+        V dataObject;
         try {
-            value = memotyCache.get(key);
+            dataObject = memotyCache.get(key);
         } catch (Exception e) {
             System.out.println("Entity is not found");
-            value = null;
+            dataObject = null;
         }
-        return value;
+        return dataObject;
     }
 
     @Override

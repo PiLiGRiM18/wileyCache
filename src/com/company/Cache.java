@@ -2,6 +2,8 @@ package com.company;
 
 
 import com.company.manager.CacheManager;
+import com.company.manager.FilesystemManager;
+import com.company.manager.MemoryManager;
 import com.company.strategy.Strategy;
 
 import java.io.ByteArrayInputStream;
@@ -53,7 +55,8 @@ public class Cache<V, K> {
 
         if (cacheManager.contains(key)) {
             object = (V) serializer.deSerializeObject(new ByteArrayInputStream((byte[]) cacheManager.get(key)));
-            System.out.println("object from cache: ");
+            if (cacheManager instanceof MemoryManager) System.out.println("object from RAM cache: ");
+            if (cacheManager instanceof FilesystemManager) System.out.println("object from filesystem cache: ");
         } else {
             object = (V) dataObjectSource.getObject((Integer) key);
             System.out.println("object from source: ");
