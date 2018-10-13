@@ -15,11 +15,16 @@ public class FilesystemManager<K, V> implements CacheManager<K, V> {
     private Path localDirectory;
     private Map keys = new HashMap();
 
-    public FilesystemManager() {
+    public FilesystemManager() throws IOException {
         this("local_cache");
     }
 
-    public FilesystemManager(String dirPath) {
+    public FilesystemManager(String dirPath) throws IOException {
+        localDirectory = Paths.get(dirPath);
+
+        if (!Files.isDirectory(localDirectory)) {
+            Files.createDirectory(localDirectory);
+        }
         this.localDirectory = Paths.get(dirPath);
     }
 

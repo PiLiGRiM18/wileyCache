@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Created by Alexander Pervachuk <apervachuk@wiley.com> on 11.10.2018 12:09
  */
@@ -24,7 +26,7 @@ public class CacheTest {
     private Cache cache;
 
     @BeforeMethod
-    public void precondition() {
+    public void precondition() throws IOException {
         dataObjectSource = new DataObjectSource(NUMBER_SOURCE_OBJECTS);
         serializer = new Serializer();
 
